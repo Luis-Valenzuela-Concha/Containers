@@ -18,14 +18,23 @@ def connect():
 
 app = Flask(__name__)
 
-@app.route('/db', methods=['GET'])
-def get_db():
+@app.route('/api/message', methods=['POST'])
+def post():
+    data = request.get_json()
     conn = connect()
     cur = conn.cursor()
-    cur.execute('SELECT * FROM connections;')
-    rows = cur.fetchall()
+    cur.execute("INSERT INTO connections (Texto, FechaHora, Sistema, Estado) VALUES (%s, %s, %s, %s)", (data['text'], datetime.now(), data['system'], data['status']))
+    conn.commit()
+    cur.close()
     conn.close()
-    return jsonify({'rows': rows})
+    
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM connections")
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    return jsonify(rows)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=3000)
