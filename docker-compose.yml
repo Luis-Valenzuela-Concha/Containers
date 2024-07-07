@@ -12,7 +12,18 @@ services:
       POSTGRES_PASSWORD: mypassword
     networks:
       - mynet
-  
+    ports:
+      - "5432:5432"
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    networks:
+      - mynet
+
   rest_server:
     build: .
     command: python ./server/rest_server.py
