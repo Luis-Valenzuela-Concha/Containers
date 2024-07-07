@@ -42,6 +42,16 @@ services:
     networks:
       - mynet
 
+  websocket_server:
+    build: .
+    command: python ./server/websocket_server.py
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - mynet
+
 volumes:
   db_data:
 
