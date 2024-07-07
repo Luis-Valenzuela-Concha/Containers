@@ -10,16 +10,29 @@ services:
       POSTGRES_DB: mydb
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypassword
+    networks:
+      - mynet
   
   rest_server:
     build: .
-    command: python rest_server.py
+    command: python ./server/rest_server.py
     ports:
       - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - mynet
 
-  # rest_client:
-  #   build: .
-  #   command: python rest_client.py
+  rest_client:
+    build: .
+    command: python ./client/rest_client.py
+    depends_on:
+      - rest_server
+    networks:
+      - mynet
 
 volumes:
   db_data:
+
+networks:
+  mynet:
