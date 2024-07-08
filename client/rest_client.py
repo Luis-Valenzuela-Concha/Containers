@@ -1,7 +1,7 @@
 import requests
 import time
 
-API_URL = 'http://localhost:3000/'
+API_URL = 'http://rest_server:3000/'
 
 def send_message(message):
     data = {
