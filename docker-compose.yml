@@ -14,19 +14,20 @@ services:
       - mynet
     ports:
       - "5432:5432"
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "8080:80"
-    networks:
-      - mynet
 
+  #pgadmin:
+  #  image: dpage/pgadmin4
+  #  environment:
+  #    PGADMIN_DEFAULT_EMAIL: admin@example.com
+  #    PGADMIN_DEFAULT_PASSWORD: admin
+  #  ports:
+  #    - "8080:80"
+  #  networks:
+  #    - mynet
+  
   rest_server:
     build: .
-    command: python ./server/rest_server.py
+    command: python -u ./server/rest_server.py
     ports:
       - "3000:3000"
     depends_on:
@@ -36,7 +37,7 @@ services:
 
   rest_client:
     build: .
-    command: python ./client/rest_client.py
+    command: python -u ./client/rest_client.py
     depends_on:
       - rest_server
     networks:
@@ -44,11 +45,19 @@ services:
 
   websocket_server:
     build: .
-    command: python ./server/websocket_server.py
+    command: python -u ./server/websocket_server.py
     ports:
-      - "8000:8000"
+      - "7890:7890"
     depends_on:
       - db
+    networks:
+      - mynet
+
+  websocket_client:
+    build: .
+    command: python -u ./client/websocket_client.py
+    depends_on:
+      - websocket_server
     networks:
       - mynet
 
