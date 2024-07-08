@@ -33,21 +33,30 @@ async def notify_clients(tipocliente, mensaje, total):
         await asyncio.gather(*[client.send(message) for client in clients])
 
 async def listen_to_db():
-    try:
-        conn = psycopg2.connect(
-            dbname=POSTGRES_DB,
-            user=POSTGRES_USER,
-            password=POSTGRES_PASSWORD,
-            host='db',
-            port=5432,
-        )
-        print("Connected to the database")
-        conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
-        cursor = conn.cursor()
-        cursor.execute("LISTEN new_message;")
-    except Exception as e:
-        print(f"Exception in listen_to_db: {e}")
+    max_retries = 5
+    retries = 0
+    while retries < max_retries:
+        try:
+            conn = psycopg2.connect(
+                dbname=POSTGRES_DB,
+                user=POSTGRES_USER,
+                password=POSTGRES_PASSWORD,
+                host='db',
+                port=5432,
+            )
+            print("Connected to the database")
+            conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
+            cursor = conn.cursor()
+            cursor.execute("LISTEN new_message;")
+            break
+        except Exception as e:
+            retries += 1
+            print(f"Exception in listen_to_db: {e}")
+            await asyncio.sleep(5)
+    else:
+        print("Could not connect to the database")
         return
+        
 
     while True:
         conn.poll()
