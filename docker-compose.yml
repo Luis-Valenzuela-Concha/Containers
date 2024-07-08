@@ -61,6 +61,7 @@ services:
     build: .
     command: python -u ./client/websocket_client.py
     depends_on:
+      - db
       - websocket_server
     networks:
       - mynet

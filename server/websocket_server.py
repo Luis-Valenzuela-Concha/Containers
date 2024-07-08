@@ -8,6 +8,7 @@ import os
 POSTGRES_DB = os.getenv('DB_NAME')
 POSTGRES_USER = os.getenv('DB_USER')
 POSTGRES_PASSWORD = os.getenv('DB_PASSWORD')
+POSTGRES_HOST = os.getenv('DB_HOST')
 WS_SERVER_PORT = os.getenv('WS_SERVER_PORT')
 
 clients = set()
