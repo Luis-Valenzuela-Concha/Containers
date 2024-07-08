@@ -1,5 +1,7 @@
 import argparse
-from client import rest_client, rabbitmq_client, grpc_client
+#from client.RabbitMQ import rabbitmq_client
+#from client.GRPC import grpc_client
+from client.REST import rest_client
 
 parser = argparse.ArgumentParser(description='Execute another script with two string arguments.')
 parser.add_argument('arg1', help='First string argument')

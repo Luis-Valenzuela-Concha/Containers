@@ -1,10 +1,10 @@
 FROM python:3.8-slim
 
-# Instala todas las dependencias necesarias para los clientes y servidores
-COPY requirements.txt /app/
-RUN pip install -r /app/requirements.txt
+# Copiar el script sender.py (y cualquier otro archivo necesario) al contenedor
+COPY sender.py ./
+COPY client/ client/
 
-# Copia todos los scripts necesarios
-COPY . /app
+RUN pip install --no-cache-dir requests
 
-WORKDIR /app
+CMD ["bash"]
+
