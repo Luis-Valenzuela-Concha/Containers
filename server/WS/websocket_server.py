@@ -1,25 +1,13 @@
-# websocket_server.py
 import asyncio
 import websockets
 
-connected_clients = set()
-
+# create handler for each connection
 async def handler(websocket, path):
-    connected_clients.add(websocket)
-    try:
-        await websocket.wait_closed()
-    finally:
-        connected_clients.remove(websocket)
+    data = await websocket.recv()
+    reply = f"Data recieved as:  {data}!"
+    await websocket.send(reply)
 
-async def send_message(message):
-    if connected_clients:  # Verifica si hay clientes conectados
-        await asyncio.wait([client.send(message) for client in connected_clients])
+start_server = websockets.serve(handler, "127.0.0.1", 3001)
 
-async def main():
-    async with websockets.serve(handler, "0.0.0.0", 6789):
-        print("WebSocket Server started at ws://0.0.0.0:6789")
-        await asyncio.Future()  # Run forever
-
-if __name__ == "__main__":
-    print("Starting WebSocket Server")
-    asyncio.run(main())
+asyncio.get_event_loop().run_until_complete(start_server)
+asyncio.get_event_loop().run_forever()

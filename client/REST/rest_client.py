@@ -9,4 +9,3 @@ def send_message(message):
         'status': True
     }
     response = requests.post(API_URL + 'api/message', json=data)
-    print(response.json())

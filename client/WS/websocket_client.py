@@ -1,14 +1,19 @@
+# websocket_client.py
 import asyncio
 import websockets
+import json
 
-async def listen():
-    uri = "ws://websocket_server:6789"
+async def websocket_client():
+    uri = "ws://websocket_server:3001" 
     async with websockets.connect(uri) as websocket:
-        print(f"Connected to WebSocket server at {uri}")
+        # Opcional: Enviar un mensaje inicial al servidor si es necesario
+        await websocket.send(json.dumps({"message": "Hello, Server!"}))
+
+        print("Conectado al servidor WebSocket. Esperando mensajes...")
+        # Esperar y imprimir los mensajes recibidos del servidor
         while True:
             message = await websocket.recv()
-            print(f"Received message: {message}")
+            print(f"Recibido del servidor: {message}")
 
 if __name__ == "__main__":
-    print("Starting WebSocket Client")
-    asyncio.get_event_loop().run_until_complete(listen())
+    asyncio.run(websocket_client())

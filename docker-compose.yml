@@ -25,14 +25,6 @@ services:
   #   networks:
   #     - mynet
 
-  rest_server:
-    build: './server/REST'
-    container_name: rest_server
-    depends_on:
-      - db
-    networks:
-      - mynet
-
   rest_client:
     build: './client/REST'
     container_name: rest_client
@@ -49,13 +41,22 @@ services:
     networks:
       - mynet
 
-  websocket_client:
-    build: './client/WS'
-    container_name: websocket_client
+  rest_server:
+    build: './server/REST'
+    container_name: rest_server
     depends_on:
+      - db
       - websocket_server
     networks:
       - mynet
+      
+  # websocket_client:
+  #   build: './client/WS'
+  #   container_name: websocket_client
+  #   depends_on:
+  #     - websocket_server
+  #   networks:
+  #     - mynet
   
   python_client:
     build: '.'
