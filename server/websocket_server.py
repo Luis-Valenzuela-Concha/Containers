@@ -3,11 +3,12 @@ import websockets
 import psycopg2
 import psycopg2.extensions
 import json
+import os
 
-POSTGRES_DB = "mydb"
-POSTGRES_USER = "myuser"
-POSTGRES_PASSWORD = "mypassword"
-PORT = 7890
+POSTGRES_DB = os.getenv('DB_NAME')
+POSTGRES_USER = os.getenv('DB_USER')
+POSTGRES_PASSWORD = os.getenv('DB_PASSWORD')
+WS_SERVER_PORT = os.getenv('WS_SERVER_PORT')
 
 clients = set()
 
@@ -63,7 +64,7 @@ async def listen_to_db():
 
 if __name__ == "__main__":
     print("Starting WebSocket server")
-    websocket_server = websockets.serve(register, "0.0.0.0", PORT)
+    websocket_server = websockets.serve(register, "0.0.0.0", WS_SERVER_PORT)
     loop = asyncio.get_event_loop()
     loop.run_until_complete(websocket_server)
     loop.create_task(listen_to_db())  # Run the listen_to_db coroutine

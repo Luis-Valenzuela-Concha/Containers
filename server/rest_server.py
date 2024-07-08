@@ -1,11 +1,12 @@
 from flask import Flask, request, jsonify
 from datetime import datetime
 import psycopg2
+import os
 
-
-POSTGRES_DB = "mydb"
-POSTGRES_USER = "myuser"
-POSTGRES_PASSWORD = "mypassword"
+POSTGRES_DB = os.getenv('DB_NAME')
+POSTGRES_USER = os.getenv('DB_USER')
+POSTGRES_PASSWORD = os.getenv('DB_PASSWORD')
+REST_SERVER_PORT = os.getenv('REST_SERVER_PORT')
 
 def connect():
     return psycopg2.connect(
@@ -37,4 +38,4 @@ def post():
     return jsonify(rows)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=3000)
+    app.run(debug=True, host='0.0.0.0', port=REST_SERVER_PORT)

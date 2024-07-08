@@ -3,7 +3,7 @@ import websockets
 import json
 
 async def listen():
-    url = "ws://websocket_server:7890"
+    url = "ws://websocket_server:3001"
     async with websockets.connect(url) as ws:
         await ws.send("Hello Server!")
         while True:
