@@ -6,6 +6,10 @@ RUN pip install -r /app/requirements.txt
 
 # Copia todos los scripts necesarios
 COPY . /app
+COPY message_pb2.py /app/client
+COPY message_pb2.py /app/server
+COPY message_pb2_grpc.py /app/client
+COPY message_pb2_grpc.py /app/server
 
 WORKDIR /app
 

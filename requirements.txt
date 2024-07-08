@@ -4,3 +4,6 @@ psycopg2-binary
 asyncpg
 asyncio
 websockets
+grpcio
+grpcio-tools
+protobuf

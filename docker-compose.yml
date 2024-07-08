@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     image: postgres
@@ -15,6 +13,8 @@ services:
     networks:
       - mynet
     restart: always
+    ports:
+      - "5432:5432"
 
   #pgadmin:
   #  image: dpage/pgadmin4
@@ -44,7 +44,6 @@ services:
       - rest_server
     networks:
       - mynet
-    restart: always
 
   websocket_server:
     build: .
@@ -65,7 +64,6 @@ services:
       - websocket_server
     networks:
       - mynet
-    restart: always
 
   python_client:
     build: '.'
@@ -79,6 +77,25 @@ services:
     stdin_open: true 
     restart: always
 
+  grpc_client:
+    build: .
+    command: python -u ./client/grpc_client.py
+    depends_on:
+      - grpc_server
+    networks:
+      - mynet
+
+  grpc_server:
+    build: .
+    command: python -u ./server/grpc_server.py
+    env_file:
+      - ./server/.env
+    depends_on:
+      - db
+    networks:
+      - mynet
+    restart: always
+  
 volumes:
   db_data:
 
