@@ -34,14 +34,21 @@ app = Flask(__name__)
 
 @app.route('/api/message', methods=['POST'])
 def post():
+    date = datetime.now()
     data = request.get_json()
     conn = connect()
     cur = conn.cursor()
-    cur.execute("INSERT INTO connections (Texto, FechaHora, Sistema, Estado) VALUES (%s, %s, %s, %s)", (data['text'], datetime.now(), data['system'], data['status']))
+    cur.execute("INSERT INTO connections (Texto, FechaHora, Sistema, Estado) VALUES (%s, %s, %s, %s)", (data['text'], date, data['system'], data['status']))
     conn.commit()
     cur.close()
     conn.close()
 
+    data = {
+        'text': data['text'],
+        'date': date,
+        'system': data['system'],
+        'status': data['status']
+    }
 
     return jsonify(data)
 

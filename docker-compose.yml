@@ -39,13 +39,17 @@ services:
       - mynet
     #restart: always
 
-  # rest_client:
-  #   build: ./client/REST
-  #   command: python -u ./client/rest_client.py
-  #   depends_on:
-  #     - rest_server
-  #   networks:
-  #     - mynet
+  rest_client:
+    build: 
+      context: ./client/REST
+      dockerfile: Dockerfile
+    command: ["python", "rest_client.py"]
+    depends_on:
+      - rest_server
+    stdin_open: true
+    tty: true
+    networks:
+      - mynet
 
   # websocket_server:
   #   build: ./server/WEBSOCKET

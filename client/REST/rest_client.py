@@ -9,3 +9,13 @@ def send_message(message):
         'status': True
     }
     response = requests.post(API_URL + 'api/message', json=data)
+    print("Message sent: ", response.json())
+
+# hace un main que reciba input muchas veces
+if __name__ == '__main__':
+    message = ''
+    while True:
+        message = input('Enter a message: ')
+        if message == 'exit': break
+        send_message(message)
+        
