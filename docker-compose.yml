@@ -35,72 +35,72 @@ services:
       - db
     networks:
       - mynet
-    restart: always
+    #restart: always
 
-  rest_client:
-    build: ./client/REST
-    command: python -u ./client/rest_client.py
-    depends_on:
-      - rest_server
-    networks:
-      - mynet
+  # rest_client:
+  #   build: ./client/REST
+  #   command: python -u ./client/rest_client.py
+  #   depends_on:
+  #     - rest_server
+  #   networks:
+  #     - mynet
 
-  websocket_server:
-    build: ./server/WEBSOCKET
-    command: python -u ./server/websocket_server.py
-    env_file:
-      - ./server/.env
-    depends_on:
-      - db
-    networks:
-      - mynet
-    restart: always
+  # websocket_server:
+  #   build: ./server/WEBSOCKET
+  #   command: python -u ./server/websocket_server.py
+  #   env_file:
+  #     - ./server/.env
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - mynet
+  #   restart: always
 
-  websocket_client:
-    build: ./client/WEBSOCKET
-    command: python -u ./client/websocket_client.py
-    depends_on:
-      - db
-      - websocket_server
-    networks:
-      - mynet
+  # websocket_client:
+  #   build: ./client/WEBSOCKET
+  #   command: python -u ./client/websocket_client.py
+  #   depends_on:
+  #     - db
+  #     - websocket_server
+  #   networks:
+  #     - mynet
 
-  python_client:
-    build: '.'
-    container_name: python_client
-    depends_on:
-      - rest_server
-    command: tail -f /dev/null  
-    networks:
-      - mynet
-    tty: true 
-    stdin_open: true 
-    restart: always
+  # python_client:
+  #   build: '.'
+  #   container_name: python_client
+  #   depends_on:
+  #     - rest_server
+  #   command: tail -f /dev/null  
+  #   networks:
+  #     - mynet
+  #   tty: true 
+  #   stdin_open: true 
+  #   restart: always
 
-  grpc_client:
-    build: ./client/GRPC
-    command: python -u ./client/grpc_client.py
-    depends_on:
-      - grpc_server
-    networks:
-      - mynet
+  # grpc_client:
+  #   build: ./client/GRPC
+  #   command: python -u ./client/grpc_client.py
+  #   depends_on:
+  #     - grpc_server
+  #   networks:
+  #     - mynet
 
-  grpc_server:
-    build: ./server/GRPC
-    command: python -u ./server/grpc_server.py
-    env_file:
-      - ./server/.env
-    depends_on:
-      - db
-    networks:
-      - mynet
-    restart: always
+  # grpc_server:
+  #   build: ./server/GRPC
+  #   command: python -u ./server/grpc_server.py
+  #   env_file:
+  #     - ./server/.env
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - mynet
+  #   restart: always
 
-  rabbitmq:
-    image: rabbitmq:3-management
-    networks:
-      - mynet
-    restart: always
+  # rabbitmq:
+  #   image: rabbitmq:3-management
+  #   networks:
+  #     - mynet
+  #   restart: always
   
 volumes:
   db_data:

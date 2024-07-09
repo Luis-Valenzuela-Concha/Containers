@@ -1,2 +1,2 @@
-grpc
+grpcio
 psycopg2-binary

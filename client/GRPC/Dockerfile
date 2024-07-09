@@ -1,17 +1,13 @@
 # Use the official Python image from the Docker Hub
 FROM python:3.9-slim
 
-# Set the working directory in the container
+COPY requirements.txt /app/
+RUN pip install -r /app/requirements.txt
+
+# Copia todos los scripts necesarios
+COPY . /app
+
 WORKDIR /app
-
-# Copy the requirements file into the container
-COPY requirements.txt .
-
-# Install the dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the rest of the application code into the container
-COPY . .
 
 # Specify the command to run the gRPC client
 CMD ["python", "grpc_client.py"]

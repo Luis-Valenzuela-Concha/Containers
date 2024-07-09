@@ -1,17 +1,14 @@
 # Use the official Python image from the Docker Hub
 FROM python:3.9-slim
 
-# Set the working directory in the container
+# Instala todas las dependencias necesarias para los clientes y servidores
+COPY requirements.txt /app/
+RUN pip install -r /app/requirements.txt
+
+# Copia todos los scripts necesarios
+COPY . /app
+
 WORKDIR /app
-
-# Copy the requirements file into the container
-COPY requirements.txt .
-
-# Install the dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the rest of the application code into the container
-COPY . .
 
 # Set the entry point for the container
 CMD ["python", "rest_client.py"]
