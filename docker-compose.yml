@@ -13,8 +13,8 @@ services:
     networks:
       - mynet
     restart: always
-    ports:
-      - "5432:5432"
+    # ports:
+    #   - "5432:5432"
 
   #pgadmin:
   #  image: dpage/pgadmin4
@@ -40,8 +40,6 @@ services:
   rest_client:
     build: .
     command: python -u ./client/rest_client.py
-    env_file:
-      - ./client/.env
     depends_on:
       - rest_server
     networks:
@@ -61,8 +59,6 @@ services:
   websocket_client:
     build: .
     command: python -u ./client/websocket_client.py
-    env_file:
-      - ./client/.env
     depends_on:
       - db
       - websocket_server
@@ -84,8 +80,6 @@ services:
   grpc_client:
     build: .
     command: python -u ./client/grpc_client.py
-    env_file:
-      - ./client/.env
     depends_on:
       - grpc_server
     networks:

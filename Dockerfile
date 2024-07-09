@@ -8,9 +8,6 @@ RUN pip install -r /app/requirements.txt
 COPY . /app
 
 COPY ./proto ./app/client/
-COPY ./proto ./app/client/
-
-COPY ./proto ./app/server/
 COPY ./proto ./app/server/
 
 WORKDIR /app
