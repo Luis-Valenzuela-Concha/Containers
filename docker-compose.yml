@@ -27,7 +27,7 @@ services:
   #    - mynet
   
   rest_server:
-    build: .
+    build: ./server/REST
     command: python -u ./server/rest_server.py
     env_file:
       - ./server/.env
@@ -38,7 +38,7 @@ services:
     restart: always
 
   rest_client:
-    build: .
+    build: ./client/REST
     command: python -u ./client/rest_client.py
     depends_on:
       - rest_server
@@ -46,7 +46,7 @@ services:
       - mynet
 
   websocket_server:
-    build: .
+    build: ./server/WEBSOCKET
     command: python -u ./server/websocket_server.py
     env_file:
       - ./server/.env
@@ -57,7 +57,7 @@ services:
     restart: always
 
   websocket_client:
-    build: .
+    build: ./client/WEBSOCKET
     command: python -u ./client/websocket_client.py
     depends_on:
       - db
@@ -78,7 +78,7 @@ services:
     restart: always
 
   grpc_client:
-    build: .
+    build: ./client/GRPC
     command: python -u ./client/grpc_client.py
     depends_on:
       - grpc_server
@@ -86,7 +86,7 @@ services:
       - mynet
 
   grpc_server:
-    build: .
+    build: ./server/GRPC
     command: python -u ./server/grpc_server.py
     env_file:
       - ./server/.env
