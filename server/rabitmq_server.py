@@ -11,10 +11,10 @@ POSTGRES_HOST = os.getenv('DB_HOST')
 
 def connect():
     return psycopg2.connect(
-        dbname="mydb",
-        user="myuser",
-        password="mypassword",
-        host="localhost",
+        dbname=POSTGRES_DB,
+        user=POSTGRES_USER,
+        password=POSTGRES_PASSWORD,
+        host=POSTGRES_HOST,
         port=5432,
     )
 
@@ -34,7 +34,7 @@ def callback(ch, method, properties, body):
 
 def main():
     # Connect to RabbitMQ
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
     channel = connection.channel()
 
     # Declare a queue

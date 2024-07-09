@@ -29,14 +29,9 @@ def post():
     conn.commit()
     cur.close()
     conn.close()
-    
-    conn = connect()
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM connections")
-    rows = cur.fetchall()
-    cur.close()
-    conn.close()
-    return jsonify(rows)
+
+
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=REST_SERVER_PORT)

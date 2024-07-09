@@ -11,7 +11,7 @@ def send_message(message):
     json_message = json.dumps(data)
 
     # Connect to RabbitMQ
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
     channel = connection.channel()
 
     # Declare a queue
@@ -23,7 +23,3 @@ def send_message(message):
 
     # Close the connection
     connection.close()
-
-if __name__ == '__main__':
-    message = "FINALMENTE!"
-    send_message(message)
