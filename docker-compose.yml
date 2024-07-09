@@ -27,8 +27,10 @@ services:
   #    - mynet
   
   rest_server:
-    build: ./server/REST
-    command: python -u ./server/rest_server.py
+    build: 
+      context: ./server/REST
+      dockerfile: Dockerfile
+    command: ["python", "rest_server.py"]
     env_file:
       - ./server/.env
     depends_on:
