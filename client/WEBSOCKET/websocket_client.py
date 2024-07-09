@@ -1,7 +1,6 @@
 import asyncio
 import websockets
 import json
-import os
 
 async def listen():
     url = "ws://websocket_server:3001"

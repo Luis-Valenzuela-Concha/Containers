@@ -1,6 +1,4 @@
 import requests
-import time
-import os
 
 API_URL = 'http://rest_server:3000/'
 
