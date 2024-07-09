@@ -1,5 +1,0 @@
-grpcio
-pika
-requests
-asyncio
-websockets

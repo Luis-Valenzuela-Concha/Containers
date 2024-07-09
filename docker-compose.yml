@@ -37,7 +37,7 @@ services:
       - db
     networks:
       - mynet
-    #restart: always
+    restart: always
 
   rest_client:
     build: 

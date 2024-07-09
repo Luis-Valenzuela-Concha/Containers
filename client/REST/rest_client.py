@@ -13,6 +13,7 @@ def send_message(message):
 
 # hace un main que reciba input muchas veces
 if __name__ == '__main__':
+    print("REST CLIENT IS RUNNING")
     message = ''
     while True:
         message = input('Enter a message: ')
