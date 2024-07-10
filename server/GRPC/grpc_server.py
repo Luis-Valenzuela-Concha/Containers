@@ -6,11 +6,6 @@ import datetime  # Importa datetime para obtener la hora actual
 import psycopg2
 import os
 import sys
-
-current_dir = os.path.dirname(__file__)
-parent_dir = os.path.dirname(current_dir)  # Subir un nivel
-sys.path.insert(0, parent_dir)
-
 from proto import message_pb2
 from proto import message_pb2_grpc
 

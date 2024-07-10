@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Set the entry point for the container
-CMD ["python", "websocket_client.py"]
+CMD ["python", "-u", "websocket_client.py"]

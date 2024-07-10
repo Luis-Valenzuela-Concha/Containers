@@ -30,7 +30,6 @@ services:
     build: 
       context: ./server/REST
       dockerfile: Dockerfile
-    command: ["python", "rest_server.py"]
     env_file:
       - ./server/.env
     depends_on:
@@ -43,7 +42,6 @@ services:
     build: 
       context: ./client/REST
       dockerfile: Dockerfile
-    command: ["python", "rest_client.py"]
     depends_on:
       - rest_server
     stdin_open: true
@@ -51,25 +49,27 @@ services:
     networks:
       - mynet
 
-  # websocket_server:
-  #   build: ./server/WEBSOCKET
-  #   command: python -u ./server/websocket_server.py
-  #   env_file:
-  #     - ./server/.env
-  #   depends_on:
-  #     - db
-  #   networks:
-  #     - mynet
-  #   restart: always
+  websocket_server:
+    build: 
+      context: ./server/WEBSOCKET
+      dockerfile: Dockerfile
+    env_file:
+      - ./server/.env
+    depends_on:
+      - db
+    networks:
+      - mynet
+    restart: always
 
-  # websocket_client:
-  #   build: ./client/WEBSOCKET
-  #   command: python -u ./client/websocket_client.py
-  #   depends_on:
-  #     - db
-  #     - websocket_server
-  #   networks:
-  #     - mynet
+  websocket_client:
+    build:
+      context: ./client/WEBSOCKET
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+      - websocket_server
+    networks:
+      - mynet
 
   # python_client:
   #   build: '.'
@@ -83,30 +83,58 @@ services:
   #   stdin_open: true 
   #   restart: always
 
-  # grpc_client:
-  #   build: ./client/GRPC
-  #   command: python -u ./client/grpc_client.py
-  #   depends_on:
-  #     - grpc_server
-  #   networks:
-  #     - mynet
+  grpc_client:
+    build:
+      context: ./client/GRPC
+      dockerfile: Dockerfile
+    depends_on:
+      - grpc_server
+    stdin_open: true
+    tty: true
+    networks:
+      - mynet
 
-  # grpc_server:
-  #   build: ./server/GRPC
-  #   command: python -u ./server/grpc_server.py
-  #   env_file:
-  #     - ./server/.env
-  #   depends_on:
-  #     - db
-  #   networks:
-  #     - mynet
-  #   restart: always
+  grpc_server:
+    build:
+      context: ./server/GRPC
+      dockerfile: Dockerfile
+    env_file:
+      - ./server/.env
+    depends_on:
+      - db
+    networks:
+      - mynet
+    restart: always
 
-  # rabbitmq:
-  #   image: rabbitmq:3-management
-  #   networks:
-  #     - mynet
-  #   restart: always
+  rabbitmq:
+    image: rabbitmq:3-management
+    networks:
+      - mynet
+    restart: always
+
+  rabbitmq_client:
+    build:
+      context: ./client/RABBITMQ
+      dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq_server
+    stdin_open: true
+    tty: true
+    networks:
+      - mynet
+
+  rabbitmq_server:
+    build:
+      context: ./server/RABBITMQ
+      dockerfile: Dockerfile
+    env_file:
+      - ./server/.env
+    depends_on:
+      - db
+      - rabbitmq
+    networks:
+      - mynet
+    restart: always
   
 volumes:
   db_data:

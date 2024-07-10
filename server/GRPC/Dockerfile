@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Set the entry point for the container
-CMD ["python", "grpc_server.py"]
+CMD ["python", "-u", "grpc_server.py"]

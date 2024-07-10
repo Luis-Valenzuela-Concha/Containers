@@ -11,4 +11,4 @@ COPY . /app
 WORKDIR /app
 
 # Set the entry point for the container
-CMD ["python", "rest_client.py"]
+CMD ["python", "-u", "rest_client.py"]

@@ -1,2 +1,4 @@
 grpcio
 psycopg2-binary
+grpcio-tools
+protobuf

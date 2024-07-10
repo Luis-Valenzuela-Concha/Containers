@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Set the entry point for the container
-CMD ["python", "rabbitmq_server.py"]
+CMD ["python", "-u", "rabbitmq_server.py"]

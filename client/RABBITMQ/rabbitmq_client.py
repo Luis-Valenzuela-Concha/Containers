@@ -23,3 +23,12 @@ def send_message(message):
 
     # Close the connection
     connection.close()
+
+# hace un main que reciba input muchas veces
+if __name__ == '__main__':
+    print("RABBITMQ CLIENT IS RUNNING")
+    message = ''
+    while True:
+        message = input('Enter a message: ')
+        if message == 'exit': break
+        send_message(message)

@@ -3,6 +3,7 @@ import psycopg2
 import os
 import json
 from datetime import datetime
+import time
 
 POSTGRES_DB = os.getenv('DB_NAME')
 POSTGRES_USER = os.getenv('DB_USER')
@@ -34,7 +35,18 @@ def callback(ch, method, properties, body):
 
 def main():
     # Connect to RabbitMQ
-    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
+    max_retries = 5
+    retries = 0
+    while retries < max_retries:
+        try:
+            connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
+            print("Connected to RabbitMQ")
+            break
+        except Exception as e:
+            retries += 1
+            print(f"Cant connect to RabbitMQ. Retrying in 5 seconds ...")
+            time.sleep(5)
+
     channel = connection.channel()
 
     # Declare a queue

@@ -10,4 +10,4 @@ COPY . /app
 WORKDIR /app
 
 # Specify the command to run the gRPC client
-CMD ["python", "grpc_client.py"]
+CMD ["python", "-u", "grpc_client.py"]

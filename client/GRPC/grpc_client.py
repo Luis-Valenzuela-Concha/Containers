@@ -1,11 +1,6 @@
 import grpc
 import sys
 import os
-
-current_dir = os.path.dirname(__file__)
-parent_dir = os.path.dirname(current_dir)  # Subir un nivel
-sys.path.insert(0, parent_dir)
-
 from proto import message_pb2
 from proto import message_pb2_grpc
 
@@ -29,3 +24,12 @@ def send_message(message):
                 status=data['status']
             )
         )
+
+# hace un main que reciba input muchas veces
+if __name__ == '__main__':
+    print("GRPC CLIENT IS RUNNING")
+    message = ''
+    while True:
+        message = input('Enter a message: ')
+        if message == 'exit': break
+        send_message(message)

@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Set the entry point for the container
-CMD ["python", "rest_server.py"]
+CMD ["python", "-u", "rest_server.py"]
