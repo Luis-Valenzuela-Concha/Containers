@@ -34,7 +34,6 @@ def post():
 
     data = {
         'text': data['text'],
-        'date': date,
         'system': data['system'],
         'status': data['status']
     }

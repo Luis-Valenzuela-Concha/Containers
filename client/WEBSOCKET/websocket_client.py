@@ -1,9 +1,12 @@
 import asyncio
 import websockets
 import json
+import os
+
+WS_SERVER_PORT = os.getenv('WS_SERVER_PORT')
 
 async def listen():
-    url = "ws://websocket_server:3001"
+    url = "ws://websocket_server:" + str(WS_SERVER_PORT)
     async with websockets.connect(url) as ws:
         await ws.send("Hello Server!")
         while True:

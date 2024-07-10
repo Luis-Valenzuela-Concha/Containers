@@ -7,7 +7,8 @@ from proto import message_pb2_grpc
 # back to current_dir
 sys.path.pop(0)
 
-GRPC_SERVER_URL = 'grpc_server:50051'
+GRPC_PORT = os.getenv('GRPC_SERVER_PORT')
+GRPC_SERVER_URL = 'grpc_server:' + GRPC_PORT
 
 def send_message(message):
     data = {
@@ -24,6 +25,7 @@ def send_message(message):
                 status=data['status']
             )
         )
+        print("Message sent: ", data)
 
 # hace un main que reciba input muchas veces
 if __name__ == '__main__':

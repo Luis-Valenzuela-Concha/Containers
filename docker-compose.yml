@@ -13,18 +13,6 @@ services:
     networks:
       - mynet
     restart: always
-    # ports:
-    #   - "5432:5432"
-
-  #pgadmin:
-  #  image: dpage/pgadmin4
-  #  environment:
-  #    PGADMIN_DEFAULT_EMAIL: admin@example.com
-  #    PGADMIN_DEFAULT_PASSWORD: admin
-  #  ports:
-  #    - "8080:80"
-  #  networks:
-  #    - mynet
   
   rest_server:
     build: 
@@ -42,6 +30,8 @@ services:
     build: 
       context: ./client/REST
       dockerfile: Dockerfile
+    env_file:
+      - ./client/.env
     depends_on:
       - rest_server
     stdin_open: true
@@ -65,28 +55,20 @@ services:
     build:
       context: ./client/WEBSOCKET
       dockerfile: Dockerfile
+    env_file:
+      - ./client/.env
     depends_on:
       - db
       - websocket_server
     networks:
       - mynet
 
-  # python_client:
-  #   build: '.'
-  #   container_name: python_client
-  #   depends_on:
-  #     - rest_server
-  #   command: tail -f /dev/null  
-  #   networks:
-  #     - mynet
-  #   tty: true 
-  #   stdin_open: true 
-  #   restart: always
-
   grpc_client:
     build:
       context: ./client/GRPC
       dockerfile: Dockerfile
+    env_file:
+      - ./client/.env
     depends_on:
       - grpc_server
     stdin_open: true

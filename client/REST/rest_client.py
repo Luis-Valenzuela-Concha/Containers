@@ -1,6 +1,8 @@
 import requests
+import os
 
-API_URL = 'http://rest_server:3000/'
+REST_SERVER_PORT = os.getenv('REST_SERVER_PORT')
+API_URL = 'http://rest_server:' + str(REST_SERVER_PORT) + '/'
 
 def send_message(message):
     data = {
@@ -9,7 +11,7 @@ def send_message(message):
         'status': True
     }
     response = requests.post(API_URL + 'api/message', json=data)
-    print("Message sent: ", response.json())
+    print("Message sent: ", data)
 
 # hace un main que reciba input muchas veces
 if __name__ == '__main__':
